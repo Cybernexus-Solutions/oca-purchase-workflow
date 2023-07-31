@@ -13,9 +13,10 @@ class PurchaseOrder(models.Model):
             default = {}
         default["order_line"] = [
             (0, 0, line.copy_data()[0])
-            for line in self.order_line.filtered(lambda l: not l.is_deposit)
+            for line in self.order_line
+            if not line.is_deposit
         ]
-        return super(PurchaseOrder, self).copy_data(default)
+        return super().copy_data(default)
 
 
 class PurchaseOrderLine(models.Model):
@@ -28,7 +29,7 @@ class PurchaseOrderLine(models.Model):
     )
 
     def _prepare_account_move_line(self, move=False):
-        res = super(PurchaseOrderLine, self)._prepare_account_move_line(move=move)
+        res = super()._prepare_account_move_line(move=move)
         if self.is_deposit:
             res["quantity"] = -1 * self.qty_invoiced
         return res
