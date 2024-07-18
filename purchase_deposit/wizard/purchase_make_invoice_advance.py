@@ -138,7 +138,7 @@ class PurchaseAdvancePaymentInv(models.TransientModel):
         invoice = Invoice.create(deposit_val)
         invoice.message_post_with_source(
             "mail.message_origin_link",
-            values={"self": invoice, "origin": order},
+            render_values={"self": invoice, "origin": order},
             subtype_id=self.env.ref("mail.mt_note").id,
         )
         return invoice
