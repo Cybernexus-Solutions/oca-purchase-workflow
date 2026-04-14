@@ -155,7 +155,7 @@ class PurchaseAdvancePaymentInv(models.TransientModel):
 
     def create_invoices(self):
         Purchase = self.env["purchase.order"]
-        purchases = Purchase.browse(self._context.get("active_ids", []))
+        purchases = Purchase.browse(self.env.context.get("active_ids", []))
         # Create deposit product if necessary
         product = self.purchase_deposit_product_id
         if not product:
@@ -201,7 +201,7 @@ class PurchaseAdvancePaymentInv(models.TransientModel):
             po_line = PurchaseLine.create(adv_po_line_dict)
             del context
             self._create_invoice(order, po_line, amount)
-            if self._context.get("open_bills", False):
+            if self.env.context.get("open_bills", False):
                 return purchases.action_view_invoice()
         return {"type": "ir.actions.act_window_close"}
 
