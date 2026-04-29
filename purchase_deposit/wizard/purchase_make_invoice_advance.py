@@ -146,7 +146,7 @@ class PurchaseAdvancePaymentInv(models.TransientModel):
             "price_unit": amount,
             "product_qty": 0.0,
             "order_id": order.id,
-            "product_uom": product.uom_id.id,
+            "product_uom_id": product.uom_id.id,
             "product_id": product.id,
             "taxes_id": [(6, 0, tax_ids)],
             "date_planned": datetime.today().strftime(DEFAULT_SERVER_DATETIME_FORMAT),
